@@ -23,7 +23,6 @@ Table of Contents
   - [Installation & Compilation](#installation--compilation)
   - [Testing & Verification](#testing--verification)
 - [Technical Demonstrations](#technical-demonstrations)
-- [Use Cases & Applications](#use-cases--applications)
 - [Author](#author)
 
 ## Project Overview
