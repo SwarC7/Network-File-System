@@ -4,10 +4,10 @@
 all: naming_server storage_server client
 
 naming_server: NamingServer/ns.c
-	gcc -o naming_server NamingServer/ns.c NamingServer/log.c NamingServer/trie.c NamingServer/ns_commands.c NamingServer/lru.c Utils/errors.c -lpthread -fsanitize=address -g
+	gcc -o naming_server NamingServer/ns.c NamingServer/log.c NamingServer/trie.c NamingServer/ns_commands.c NamingServer/lru.c NamingServer/connection_handler.c NamingServer/health_monitor.c NamingServer/command_processor.c NamingServer/backup_utils.c Utils/errors.c -lpthread -fsanitize=address -g
 
 storage_server: StorageServer/ss.c
-	gcc -o storage_server StorageServer/server_commands.c  StorageServer/async.c Utils/errors.c StorageServer/log.c -lpthread -fsanitize=address -g
+	gcc -o storage_server StorageServer/ss.c StorageServer/async.c StorageServer/file_operations.c StorageServer/network_comm.c StorageServer/backup_sync.c StorageServer/log.c Utils/errors.c -lpthread -fsanitize=address -g
 
 client: Clients/client.c
 	gcc -o client Clients/client.c Utils/errors.c -lpthread -fsanitize=address -g

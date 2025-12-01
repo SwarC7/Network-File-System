@@ -75,6 +75,11 @@ typedef struct
     pthread_mutex_t health_mutex;
 } ServerHealth;
 
+typedef struct serdest
+{
+    char dir_path[BUFFER_SIZE];
+} serdest;
+
 // LRU Cache node structure
 typedef struct LRUNode {
     char *path;                 // The cached path
@@ -113,6 +118,12 @@ extern StorageServer storage_servers[MAX_STORAGE_SERVERS];
 extern TrieNode *file_trie;
 extern LRUCache* cache;
 
+// External declarations for refactored modules
+extern pthread_mutex_t health_mutex;
+extern ServerHealth server_health[MAX_STORAGE_SERVERS];
+extern int async_writing[MAX_STORAGE_SERVERS];
+extern serdest src_dest[MAX_STORAGE_SERVERS];
+
 char *get_timestamp();
 void log_message(int level, const char *format, ...);
 void *handle_ss_registration(void *client_socket_ptr);
@@ -129,7 +140,7 @@ bool has_children(TrieNode *node);
 bool delete_specific_path(TrieNode *node, const char *path, int depth, const char *server_ip, int server_port);
 void delete_path(TrieNode *root, const char *path, const char *server_ip, int server_port);
 StorageServer *find_storage_server(TrieNode *root, const char *path);
-print_all_paths_to_client(TrieNode* root,int Client_socket);
+void print_all_paths_to_client(TrieNode* root,int Client_socket);
 
 // NS_COMMANDS
 
@@ -142,6 +153,10 @@ int receive_file(int src_sock, const char *dest_path);
 void copy_file_network(const char *src, const char *dest, const char *src_server_ip, const char *dest_server_ip, int src_port, int dest_port);
 void copy_directory_network(const char *src, const char *dest, const char *src_server_ip, const char *dest_server_ip, int src_port, int dest_port,int flag);
 void list_directory(int Client_socket);
+bool register_server(const char *ip,int port);
+void reroute_prefix(TrieNode *root, char *src_path, char *dest_path, const char *src_server_ip, const char *dest_server_ip);
+void copy_subtree(TrieNode *src, TrieNode *dest, char* dest_ip, int dest_port);
+void init_server_health(int server_index, const char *ip, int port);
 
 
 //LRU FUNCTIONS

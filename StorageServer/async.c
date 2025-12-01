@@ -1,4 +1,7 @@
+#include "async.h"
 #include "ss.h"
+#include "file_operations.h"
+#include "backup_sync.h"
 
 void copy_async_file(const char *source, const char *destination)
 {
@@ -132,7 +135,7 @@ void *async_write(int client_socket, const char *filename, char *content, const 
         {
             perror("gethostname");
             close(ns_socket);
-            return;
+            return NULL;
         }
 
         // Retrieve host information
@@ -141,7 +144,7 @@ void *async_write(int client_socket, const char *filename, char *content, const 
         {
             perror("gethostbyname");
             close(ns_socket);
-            return;
+            return NULL;
         }
         char buffer[BUFFER_SIZE];
 
@@ -152,7 +155,7 @@ void *async_write(int client_socket, const char *filename, char *content, const 
         snprintf(buffer, sizeof(buffer), "Write completed at %s:%d, %d", IPbuffer, PORT, client_socket);
         send(ns_socket, buffer, strlen(buffer), 0);
         printf("Sent IP and port to Naming Server: %s\n", buffer);
-        recv(ns_socket, health, sizeof(health), NULL);
+        recv(ns_socket, health, sizeof(health), 0);
         printf("Health: %s\n", health);
         if (strcmp(health, "Unhealthy") == 0)
         {

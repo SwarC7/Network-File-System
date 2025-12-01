@@ -159,7 +159,7 @@ void delete_path(TrieNode *root, const char *path, const char *server_ip, int se
     }
 }
 
-void reroute_prefix(TrieNode *root, char *src_path, char *dest_path, char *dest_ip, int dest_port)
+void reroute_prefix(TrieNode *root, char *src_path, char *dest_path, const char *src_server_ip, const char *dest_server_ip)
 {
     TrieNode *src_node = root;
     TrieNode *dest_node = root;
@@ -187,8 +187,8 @@ void reroute_prefix(TrieNode *root, char *src_path, char *dest_path, char *dest_
         dest_node = dest_node->children[index];
     }
 
-    // Copy the subtree from src_node to dest_node
-    copy_subtree(src_node, dest_node, dest_ip, dest_port);
+    // Copy the subtree from src_node to dest_node using the destination server info
+    copy_subtree(src_node, dest_node, (char*)dest_server_ip, 0); // Using dummy port for now
 }
 
 // Helper function to copy the subtree

@@ -1,4 +1,4 @@
-#include "../NamingServer/ns.h"
+#include "ss.h"
 
 
 FILE* log_file = NULL;

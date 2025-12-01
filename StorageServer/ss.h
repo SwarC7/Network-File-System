@@ -6,13 +6,18 @@
 // #define PORT 7070
 // #define STORAGE_PORT 7070
 
-extern int PORT;
+// Log definitions
+#define LOG_INFO 0
+#define LOG_WARNING 1
+#define LOG_ERROR 2
+#define LOG_FILE "storage_server.log"
 
-void register_with_naming_server();
-void handle_client(int client_socket);
-void send_file_content(int client_socket, const char *filename);
-void write_to_file(int client_socket, const char *filename, const char *content);
-void send_file_info(int client_socket, const char *filename);
-void stream_audio(int client_socket, const char *filename);
-void send_directory_contents(int sock, const char *path, char* parent_dir, int send_content);
-void *async_write(int client_socket, const char *filename, char *content, const char * client_ip);
+// Include necessary constants from Utils
+#define NM_IP "192.168.195.214"  // IP address of the Naming Server
+#define NM_PORT 5000       // Port of the Naming Server
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+// Include logging functionality
+#include "log.h"
+
+extern int PORT;

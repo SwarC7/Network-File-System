@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 
 #define PORT 7070
-#define BUFFER_SIZE 1024
 #define NAMING_SERVER_PORT 5000
 
 #include "../Utils/headers.h"
@@ -132,7 +131,8 @@ void send_request(const char *request)
         if (recv(sock, &header, sizeof(header), 0) < 0)
         {
             perror("Failed to receive header");
-            return -1;
+            close(sock);
+            return;
         }
 
         // Check if header printed correctly.
@@ -148,7 +148,8 @@ void send_request(const char *request)
             if (bytes_received <= 0)
             {
                 perror("Failed to receive file data");
-                return -1;
+                close(sock);
+                return;
             }
 
             printf("%s", buffer);
