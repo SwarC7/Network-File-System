@@ -12,9 +12,9 @@
 #define LOG_ERROR 2
 #define LOG_FILE "storage_server.log"
 
-// Include necessary constants from Utils
-#define NM_IP "192.168.195.214"  // IP address of the Naming Server
-#define NM_PORT 5000       // Port of the Naming Server
+// Include necessary constants from Utils (NM_IP defined in constants.h)
+// #define NM_IP "192.168.195.214"  // IP address of the Naming Server - REMOVED: Defined in constants.h
+// #define NM_PORT 5000       // Port of the Naming Server - REMOVED: Defined in constants.h
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 // Include logging functionality
